@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI_MailManager", "MSI_MailManager\MSI_MailManager.csproj", "{FD4DDFFC-BB3D-4908-A4C1-774BDFBC281D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI_Tester", "MSI_Tester\MSI_Tester.csproj", "{40CFA5AB-66D7-4F7A-A94D-C9C215674199}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI_Runner", "MSI_Runner\MSI_Runner.csproj", "{13D97070-8786-4F6E-8FAE-AB23918AA99E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD4DDFFC-BB3D-4908-A4C1-774BDFBC281D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD4DDFFC-BB3D-4908-A4C1-774BDFBC281D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD4DDFFC-BB3D-4908-A4C1-774BDFBC281D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD4DDFFC-BB3D-4908-A4C1-774BDFBC281D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40CFA5AB-66D7-4F7A-A94D-C9C215674199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40CFA5AB-66D7-4F7A-A94D-C9C215674199}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40CFA5AB-66D7-4F7A-A94D-C9C215674199}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40CFA5AB-66D7-4F7A-A94D-C9C215674199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13D97070-8786-4F6E-8FAE-AB23918AA99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13D97070-8786-4F6E-8FAE-AB23918AA99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13D97070-8786-4F6E-8FAE-AB23918AA99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13D97070-8786-4F6E-8FAE-AB23918AA99E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

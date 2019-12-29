@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>0.1</PackageVersion>
+    <Authors>Microsource </Authors>
+    <Description>TBD</Description>
+    <PackageId>MSI_MailManager</PackageId>
+    <Copyright>Microsource</Copyright>
+    <Owners>Microsource</Owners>
+    <PackageReleaseNotes>TBD</PackageReleaseNotes>
+    <Summary>MSI</Summary>
+    <PackageTags>MSI_MailManager</PackageTags>
+    <Title>MSI_MailManager</Title>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.5-dev.8">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+</Project>
