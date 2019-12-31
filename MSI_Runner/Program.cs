@@ -24,7 +24,7 @@ namespace MSI_Runner
                 {
                     FromEmail = "hil.jacla@gmail.com",
                     FromName = "Hilario Jacla III",
-                    FromPassword = "qM.oB!L]-&pwM)zgL",
+                    FromPassword = "",
                 },
                 SMTPInformation = new MSI_MailManager.Models.SMTPInformation()
                 {

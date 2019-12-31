@@ -3,14 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.1</PackageVersion>
+    <PackageVersion>0.2</PackageVersion>
     <Authors>Microsource </Authors>
-    <Description>TBD</Description>
+    <Description>Added the following methods:
+1. IsEmailValid() 
+2. SendEmail()</Description>
     <PackageId>MSI_MailManager</PackageId>
     <Copyright>Microsource</Copyright>
     <Owners>Microsource</Owners>
-    <PackageReleaseNotes>TBD</PackageReleaseNotes>
-    <Summary>MSI</Summary>
+    <PackageReleaseNotes>Added the following methods:
+1. IsEmailValid() - This accepts a string and checks if it is a valid e-mail address or not
+2. SendEmail() - This accepts an e-mail object and return the list of errors encountered, if any.</PackageReleaseNotes>
+    <Summary>MSI_MailManager</Summary>
     <PackageTags>MSI_MailManager</PackageTags>
     <Title>MSI_MailManager</Title>
   </PropertyGroup>
