@@ -34,7 +34,7 @@ namespace MSI_MailManager
         /// <returns></returns>
         public string SendEmail(Email email)
         {
-            StringBuilder errorCollection;
+            StringBuilder errorCollection = new StringBuilder();
             try
             {
                 if (AllRequiredFieldsSuppliedByTheUser(email, out errorCollection))
@@ -61,6 +61,7 @@ namespace MSI_MailManager
                     })
                     {
                         smtp.Send(message);
+                        errorCollection.Append("Message has been sent.");
                         Console.WriteLine("Message has been sent.");
                     }
                 }
@@ -72,7 +73,7 @@ namespace MSI_MailManager
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                errorCollection.Append(ex.ToString());
             }
             return errorCollection.ToString();
         }

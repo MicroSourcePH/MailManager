@@ -22,9 +22,9 @@ namespace MSI_Runner
                 },
                 SenderInformation = new MSI_MailManager.Models.SenderInformation()
                 {
-                    FromEmail = "hil.jacla@gmail.com",
+                    FromEmail = "offshoreconfie@gmail.com",
                     FromName = "Hilario Jacla III",
-                    FromPassword = "",
+                    FromPassword = "7tfRPX-=",
                 },
                 SMTPInformation = new MSI_MailManager.Models.SMTPInformation()
                 {

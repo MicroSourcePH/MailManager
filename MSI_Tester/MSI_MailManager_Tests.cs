@@ -28,9 +28,9 @@ namespace MSI_Tester
                 },
                 SenderInformation = new MSI_MailManager.Models.SenderInformation()
                 {
-                    FromEmail = "hil.jacla@gmail.com",
+                    FromEmail = "offshoreconfie@gmail.com",
                     FromName = "Hilario Jacla III",
-                    FromPassword = "",
+                    FromPassword = "7tfRPX-=",
                 },
                 SMTPInformation = new MSI_MailManager.Models.SMTPInformation()
                 {
@@ -42,6 +42,8 @@ namespace MSI_Tester
             };
         }
 
+
+        #region IsEmailValid() Tests
         /// <summary>
         /// Checks that the method correctly validates a valid e-mail address
         /// </summary>
@@ -55,7 +57,8 @@ namespace MSI_Tester
             }
             Assert.Fail();
         }
-        #region IsEmailValid() Tests
+
+
         /// <summary>
         /// Ensures that the method does not allow e-amil address without @
         /// </summary>
@@ -100,6 +103,21 @@ namespace MSI_Tester
         #endregion
 
         #region SendEmail() Tests
+        /// <summary>
+        /// Ensures that our code behaves as expected when all the required parameter was supplied by the client.
+        /// </summary>
+        [Test]
+        public void Email_MessageInformation_DataIsComplete()
+        {
+            Email emailClone = email;
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
         #region Email.MessageInformation Tests
         /// <summary>
         /// Ensures that the body of the email was supplied by the client.
@@ -162,6 +180,125 @@ namespace MSI_Tester
             Assert.Fail();
         }
         #endregion
+
+        #region Email.RecipientInformation Tests
+        /// <summary>
+        /// Ensures that our code can handle when the recipient's e-mail address was not supplied
+        /// </summary>
+        [Test]
+        public void Email_RecipientInformation_ToEmail_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.RecipientInformation = new RecipientInformation()
+            {
+                ToName = "Hilario J. Jacla III"
+            };
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: TOEMAIL.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        /// <summary>
+        /// Ensures that our code can handle when the recipient's name was not supplied
+        /// </summary>
+        [Test]
+        public void Email_RecipientInformation_ToName_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.RecipientInformation = new RecipientInformation()
+            {
+                ToEmail = "hil.jacla@gmail.com"
+            };
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: TONAME.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        /// <summary>
+        /// Ensures that our code can handle when both recipient's name and e-mail was not provided by our client.
+        /// </summary>
+        [Test]
+        public void Email_RecipientInformation_ToNameAndToEmail_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.RecipientInformation = new RecipientInformation();
+            var emailResult = mailManager.SendEmail(emailClone);
+            if(emailResult.ToUpper() == "THE FOLLOWING FIELDS ARE REQUIRED: TOEMAIL,TONAME.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+        #endregion
+
+        #region Email.SenderInformation Tests
+        /// <summary>
+        /// Ensures that our code can handle when the sender's e-mail address was not supplied
+        /// </summary>
+        [Test]
+        public void Email_SenderInformation_FromEmail_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.SenderInformation = new SenderInformation()
+            {
+                FromName = "Hilario Jacla III",
+                FromPassword = "Password1"
+            };
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMEMAIL.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        /// <summary>
+        /// Ensures that our code can handle whent the sender's name was not supplied
+        /// </summary>
+        [Test]
+        public void Email_SenderInformation_FromName_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.SenderInformation = new SenderInformation()
+            {
+                FromEmail = "offshoreconfie@gmail.com",
+                FromPassword = "Password1"
+            };
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMNAME.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        /// <summary>
+        /// Ensures that our code can handle when the sender's password was not supplied
+        /// </summary>
+        [Test]
+        public void Email_SenderInformation_FromPassword_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.SenderInformation = new SenderInformation()
+            {
+                FromEmail = "offshoreconfie@gmail.com",
+                FromName = "Hilario Jacla III"
+            };
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMPASSWORD.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+        #endregion
+
         #endregion
     }
 }
