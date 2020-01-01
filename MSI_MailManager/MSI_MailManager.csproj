@@ -3,13 +3,26 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.4</PackageVersion>
+    <PackageVersion>0.5</PackageVersion>
     <Authors>Microsource </Authors>
-    <Description>Removed validation on SMTPInformation.Port as some SMTP servers does not require this to be specified</Description>
+    <Description>Implemented the following changes:
+1. Allows the client to insert attachments to e-mail
+2. Gives an option to compress files before attaching it to the e-mail
+3. Removed the "ToName" property of the Email.RecipinetInformation class
+4. Allws the client to send e-mail to multiple recipients
+5. Added unit test cases for the recent changes</Description>
     <PackageId>MSI_MailManager</PackageId>
     <Copyright>Microsource</Copyright>
     <Owners>Microsource</Owners>
-    <PackageReleaseNotes>Removed validation on SMTPInformation.Port as some SMTP servers does not require this to be specified</PackageReleaseNotes>
+    <PackageReleaseNotes>Implemented the following changes:
+1. Allows the client to insert attachments to e-mail
+2. Gives an option to compress files before attaching it to the e-mail
+3. Removed the "ToName" property of the Email.RecipinetInformation class
+4. Allws the client to send e-mail to multiple recipients
+5. Added unit test cases for the recent changes
+
+Sample code can be found here:
+https://dotnetfiddle.net/XrDRCT</PackageReleaseNotes>
     <Summary>MSI_MailManager</Summary>
     <PackageTags>MSI_MailManager</PackageTags>
     <Title>MSI_MailManager</Title>
