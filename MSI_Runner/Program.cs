@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using MSI_MailManager;
 using MSI_MailManager.Models;
 
 namespace MSI_Runner
@@ -10,8 +11,18 @@ namespace MSI_Runner
     {
         static void Main(string[] args)
         {
-            MSI_MailManager.MailManager mailManager = new MSI_MailManager.MailManager();
-            Program p = new Program();
+            MailManager mailManager = new MailManager();
+            List<RecipientInformation> receipients = new List<RecipientInformation>
+            {
+                //We put this in a class for now as we might add other properties in future releases.
+                new RecipientInformation() { ToEmail = "hil.jacla@gmail.com" }
+            };
+            //Add other recipients
+
+            List<string> attachments = new List<string>();
+            attachments.Add("/users/hiljaclaiii/testAttachment.txt");
+            //Add other attachments
+
             string result = mailManager.SendEmail(new Email()
             {
                 MessageInformation = new MessageInformation()
@@ -19,16 +30,16 @@ namespace MSI_Runner
                     Body = "TEST BODY",
                     IsHTMLBody = false,
                     Subject = "TEST SUBJECT",
-                    Attachments = p.GetTestAttachments(5),
+                    Attachments = attachments,
                     CompressAttachments = true,
                     CompressedAttachmentFileName = "TESTARCHIVE"
                 },
-                //RecipientInformation = new List<RecipientInformation> { new RecipientInformation() { ToEmail = "hil.jacla@gmail.com"} },
+                RecipientInformation = receipients,
                 SenderInformation = new SenderInformation()
                 {
                     FromEmail = "offshoreconfie@gmail.com",
                     FromName = "Hilario Jacla III",
-                    FromPassword = "7tfRPX-=",
+                    FromPassword = "",
                 },
                 SMTPInformation = new SMTPInformation()
                 {

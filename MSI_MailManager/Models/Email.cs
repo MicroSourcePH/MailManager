@@ -98,7 +98,7 @@ namespace MSI_MailManager.Models
         public bool CompressAttachments { get; set; }
 
         /// <summary>
-        /// The name of the ZIP file that will be used when CompressAttachments is set to TRUE.
+        /// The name of the ZIP file that will be used when CompressAttachments is set to TRUE, note that extention does not have to be specified.
         /// A random 4-digit file name preceeded by an underscore will be used when the file name was not specified (e.g. _1093.zip)
         /// </summary>
         public string CompressedAttachmentFileName { get; set;  }
