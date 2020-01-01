@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using MSI_MailManager.Models;
 
 namespace MSI_Runner
 {
@@ -9,31 +10,27 @@ namespace MSI_Runner
     {
         static void Main(string[] args)
         {
-            MSI_MailManager.MailManager mailManager  = new MSI_MailManager.MailManager();
+            MSI_MailManager.MailManager mailManager = new MSI_MailManager.MailManager();
             Program p = new Program();
-            string result = mailManager.SendEmail(new MSI_MailManager.Models.Email()
+            string result = mailManager.SendEmail(new Email()
             {
-                MessageInformation = new MSI_MailManager.Models.MessageInformation()
+                MessageInformation = new MessageInformation()
                 {
                     Body = "TEST BODY",
                     IsHTMLBody = false,
                     Subject = "TEST SUBJECT",
                     Attachments = p.GetTestAttachments(5),
-                    CompressAttachments=true,
-                    CompressedAttachmentFileName="TESTARCHIVE"
+                    CompressAttachments = true,
+                    CompressedAttachmentFileName = "TESTARCHIVE"
                 },
-                RecipientInformation = new MSI_MailManager.Models.RecipientInformation()
-                {
-                    ToEmail = "hil.jacla@gmail.com",
-                    ToName = "Hilario Jacla III"
-                },
-                SenderInformation = new MSI_MailManager.Models.SenderInformation()
+                //RecipientInformation = new List<RecipientInformation> { new RecipientInformation() { ToEmail = "hil.jacla@gmail.com"} },
+                SenderInformation = new SenderInformation()
                 {
                     FromEmail = "offshoreconfie@gmail.com",
                     FromName = "Hilario Jacla III",
                     FromPassword = "7tfRPX-=",
                 },
-                SMTPInformation = new MSI_MailManager.Models.SMTPInformation()
+                SMTPInformation = new SMTPInformation()
                 {
                     EnableSSL = true,
                     Host = "smtp.gmail.com",

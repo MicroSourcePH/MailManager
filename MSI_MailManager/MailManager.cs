@@ -43,7 +43,7 @@ namespace MSI_MailManager
                 if (AllRequiredFieldsSuppliedByTheUser(email, out errorCollection))
                 {
                     var fromAddress = new MailAddress(email.SenderInformation.FromEmail, email.SenderInformation.FromName);
-                    var toAddress = new MailAddress(email.RecipientInformation.ToEmail, email.RecipientInformation.ToName);
+                    //var toAddress = new MailAddress(email.RecipientInformation.ToEmail, email.RecipientInformation.ToName);
                     string fromPassword = email.SenderInformation.FromPassword;
                     string subject = email.MessageInformation.Subject;
                     string body = email.MessageInformation.Body;
@@ -57,12 +57,19 @@ namespace MSI_MailManager
                         UseDefaultCredentials = email.SMTPInformation.UseDefaultCredentials,
                         Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
                     };
-                    using var message = new MailMessage(fromAddress, toAddress)
+                    using var message = new MailMessage()
                     {
                         Subject = subject,
                         Body = body,
                         IsBodyHtml = email.MessageInformation.IsHTMLBody,
                     };
+
+                    foreach(RecipientInformation recipient in email.RecipientInformation)
+                    {
+                        message.To.Add(new MailAddress(recipient.ToEmail));
+                    }
+
+                    message.From = fromAddress;
                     
                     if(email.MessageInformation.Attachments?.Count > 0)
                     {
@@ -137,14 +144,24 @@ namespace MSI_MailManager
                             break;
                     }
 
-                    PropertyInfo[] properties = propertyInformation.GetProperties();
-                    foreach (PropertyInfo property in properties)
+                    if (propertyContainer == email.RecipientInformation)
                     {
-                        object propertyValue = property.GetValue(propertyContainer);
-                        if (propertyValue == null)
+                        //Ensures that we have at least 1 recipient
+                        if (email.RecipientInformation.Count < 1)
+                            errorCollection.Append("Please specify at least 1 recipient.");
+                    }
+                    else
+                    {
+                        PropertyInfo[] properties = propertyInformation.GetProperties();
+                        foreach (PropertyInfo property in properties)
                         {
-                            if (property.Name.ToUpper() != "ATTACHMENTS")
-                                fieldsWithValidationError.Add(property.Name);
+                            object propertyValue = property.GetValue(propertyContainer);
+                            if (propertyValue == null)
+                            {
+                                if (property.Name.ToUpper() != "ATTACHMENTS" && property.Name.ToUpper() != "COMPRESSEDATTACHMENTFILENAME")
+                                    fieldsWithValidationError.Add(property.Name);
+
+                            }
                         }
                     }
 
@@ -152,13 +169,14 @@ namespace MSI_MailManager
             }
             catch (Exception ex)
             {
-                errorCollection.AppendLine(ex.ToString());
+                Console.WriteLine(ex);
+                errorCollection.AppendLine("An exception occurred while processing your request.");
             }
-            if(fieldsWithValidationError.Count > 0)
+            if (fieldsWithValidationError.Count > 0 || errorCollection.Length != 0)
             {
                 if (fieldsWithValidationError.Count > 1)
                     errorCollection.Append("The following fields are required: " + string.Join(",", fieldsWithValidationError) + ".");
-                else
+                else if (fieldsWithValidationError.Count == 1)
                     errorCollection.Append("This field is required: " + fieldsWithValidationError[0] + ".");
             }
             else
@@ -176,10 +194,19 @@ namespace MSI_MailManager
         /// <returns></returns>
         private string ArchiveAttachments(List<string> attachmentPaths, string targetZipFileName)
         {
-            //TODO: Replace files/folder if already existing
             targetZipFileName = EscapePath(targetZipFileName);
             string currentAssemblyPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             string stagingFolderPath = currentAssemblyPath + targetZipFileName;
+
+            if (Directory.Exists(stagingFolderPath))
+            {
+                //When the name specified by the client already exists, we append a 4 digit random number.
+                Random rand = new Random();
+                int randomNumberToAppend = rand.Next(1000, 9999);
+                stagingFolderPath += "_" + randomNumberToAppend;
+                targetZipFileName += "_" + randomNumberToAppend;
+            }
+                
             Directory.CreateDirectory(stagingFolderPath);
             foreach(string path in attachmentPaths)
             {

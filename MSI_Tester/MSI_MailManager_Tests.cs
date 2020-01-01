@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MSI_MailManager.Models;
 using NUnit.Framework;
 
@@ -23,11 +24,7 @@ namespace MSI_Tester
                     IsHTMLBody = false,
                     Subject = "TEST SUBJECT"
                 },
-                RecipientInformation = new RecipientInformation()
-                {
-                    ToEmail = "hil.jacla@gmail.com",
-                    ToName = "Hilario Jacla III"
-                },
+                RecipientInformation = new List<RecipientInformation> { new RecipientInformation() { ToEmail = "hil.jacla@gmail.com"} },
                 SenderInformation = new SenderInformation()
                 {
                     FromEmail = "offshoreconfie@gmail.com",
@@ -113,6 +110,7 @@ namespace MSI_Tester
         {
             Email emailClone = email;
             var emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
             {
                 Console.WriteLine(emailResult);
@@ -123,53 +121,16 @@ namespace MSI_Tester
 
         #region Email.RecipientInformation Tests
         /// <summary>
-        /// Ensures that our code can handle when the recipient's e-mail address was not supplied
-        /// </summary>
-        [Test]
-        public void Email_RecipientInformation_ToEmail_IsNull()
-        {
-            Email emailClone = email;
-            emailClone.RecipientInformation = new RecipientInformation()
-            {
-                ToName = "Hilario J. Jacla III"
-            };
-            var emailResult = mailManager.SendEmail(emailClone);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: TOEMAIL.")
-            {
-                Assert.Pass();
-            }
-            Assert.Fail();
-        }
-
-        /// <summary>
-        /// Ensures that our code can handle when the recipient's name was not supplied
-        /// </summary>
-        [Test]
-        public void Email_RecipientInformation_ToName_IsNull()
-        {
-            Email emailClone = email;
-            emailClone.RecipientInformation = new RecipientInformation()
-            {
-                ToEmail = "hil.jacla@gmail.com"
-            };
-            var emailResult = mailManager.SendEmail(emailClone);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: TONAME.")
-            {
-                Assert.Pass();
-            }
-            Assert.Fail();
-        }
-
-        /// <summary>
-        /// Ensures that our code can handle when both recipient's name and e-mail was not provided by our client.
+        /// Ensures that our code can handle when no recipient was specified.
         /// </summary>
         [Test]
         public void Email_RecipientInformation_ToNameAndToEmail_IsNull()
         {
             Email emailClone = email;
-            emailClone.RecipientInformation = new RecipientInformation();
+            emailClone.RecipientInformation = new List<RecipientInformation>();
             var emailResult = mailManager.SendEmail(emailClone);
-            if(emailResult.ToUpper() == "THE FOLLOWING FIELDS ARE REQUIRED: TOEMAIL,TONAME.")
+            Console.WriteLine(emailResult);
+            if (emailResult.ToUpper() == "PLEASE SPECIFY AT LEAST 1 RECIPIENT.")
             {
                 Assert.Pass();
             }
@@ -191,6 +152,7 @@ namespace MSI_Tester
                 FromPassword = "Password1"
             };
             var emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMEMAIL.")
             {
                 Assert.Pass();
@@ -211,6 +173,7 @@ namespace MSI_Tester
                 FromPassword = "Password1"
             };
             var emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMNAME.")
             {
                 Assert.Pass();
@@ -231,6 +194,7 @@ namespace MSI_Tester
                 FromName = "Hilario Jacla III"
             };
             var emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMPASSWORD.")
             {
                 Assert.Pass();
@@ -254,6 +218,7 @@ namespace MSI_Tester
                 Subject = "TEST SUBJECT"
             };
             var emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: BODY.")
             {
                 Assert.Pass();
@@ -275,6 +240,7 @@ namespace MSI_Tester
                 //Subject = "TEST SUBJECT"
             };
             var emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: SUBJECT.")
             {
                 Assert.Pass();
@@ -296,6 +262,7 @@ namespace MSI_Tester
                 //Subject = "TEST SUBJECT"
             };
             var emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
             {
                 Assert.Pass();
@@ -317,8 +284,58 @@ namespace MSI_Tester
                 Subject = "TEST SUBJECT",
                 Attachments = p.GetTestAttachments(5)
             };
-            string result = mailManager.SendEmail(emailClone);
-            if(result.ToUpper() == "MESSAGE HAS BEEN SENT.")
+            string emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
+            if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        /// <summary>
+        /// Ensures that our code can handle when the client wants the attachment to be compressed and a file name was specified
+        /// </summary>
+        [Test]
+        public void Email_MessageInformation_WithCompressedAttachments_ZipNameSpecified()
+        {
+            MSI_Runner.Program p = new MSI_Runner.Program();
+            Email emailClone = email;
+            emailClone.MessageInformation = new MessageInformation()
+            {
+                Body = "TEST BODY",
+                Subject = "TEST SUBJECT",
+                Attachments = p.GetTestAttachments(5),
+                CompressAttachments=true,
+                CompressedAttachmentFileName= "TESTCOMPRESSEDATTACHMENT"
+            };
+            string emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
+            if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        /// <summary>
+        /// Ensures that our code can handle when the client wants the attachment to be compressed and a file name was NOT specified
+        /// </summary>
+        [Test]
+        public void Email_MessageInformation_WithCompressedAttachments_ZipNameNotSpecified()
+        {
+            MSI_Runner.Program p = new MSI_Runner.Program();
+            Email emailClone = email;
+            emailClone.MessageInformation = new MessageInformation()
+            {
+                Body = "TEST BODY",
+                Subject = "TEST SUBJECT",
+                Attachments = p.GetTestAttachments(5),
+                CompressAttachments = true
+            };
+            string emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
+            if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
             {
                 Assert.Pass();
             }
@@ -339,8 +356,9 @@ namespace MSI_Tester
             {
                 Port = 0
             };
-            string result = mailManager.SendEmail(emailClone);
-            if (result.ToUpper() == "THIS FIELD IS REQUIRED: HOST.")
+            string emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
+            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: HOST.")
             {
                 Assert.Pass();
             }
