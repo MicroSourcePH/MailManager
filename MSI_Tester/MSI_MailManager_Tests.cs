@@ -1,3 +1,4 @@
+using System;
 using MSI_MailManager.Models;
 using NUnit.Framework;
 
@@ -9,30 +10,31 @@ namespace MSI_Tester
         MSI_MailManager.MailManager mailManager;
         Email email;
 
+        #region Test Data Initialization
         [SetUp]
         public void Setup()
         {
             mailManager = new MSI_MailManager.MailManager();
             email = new Email()
             {
-                MessageInformation = new MSI_MailManager.Models.MessageInformation()
+                MessageInformation = new MessageInformation()
                 {
                     Body = "TEST BODY",
-                    isHTMLBody = false,
+                    IsHTMLBody = false,
                     Subject = "TEST SUBJECT"
                 },
-                RecipientInformation = new MSI_MailManager.Models.RecipientInformation()
+                RecipientInformation = new RecipientInformation()
                 {
                     ToEmail = "hil.jacla@gmail.com",
                     ToName = "Hilario Jacla III"
                 },
-                SenderInformation = new MSI_MailManager.Models.SenderInformation()
+                SenderInformation = new SenderInformation()
                 {
                     FromEmail = "offshoreconfie@gmail.com",
                     FromName = "Hilario Jacla III",
                     FromPassword = "7tfRPX-=",
                 },
-                SMTPInformation = new MSI_MailManager.Models.SMTPInformation()
+                SMTPInformation = new SMTPInformation()
                 {
                     EnableSSL = true,
                     Host = "smtp.gmail.com",
@@ -41,7 +43,7 @@ namespace MSI_Tester
                 }
             };
         }
-
+        #endregion
 
         #region IsEmailValid() Tests
         /// <summary>
@@ -113,6 +115,7 @@ namespace MSI_Tester
             var emailResult = mailManager.SendEmail(emailClone);
             if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
             {
+                Console.WriteLine(emailResult);
                 Assert.Pass();
             }
             Assert.Fail();
@@ -247,7 +250,7 @@ namespace MSI_Tester
             emailClone.MessageInformation = new MessageInformation()
             {
                 //Body = "",
-                isHTMLBody = false,
+                IsHTMLBody = false,
                 Subject = "TEST SUBJECT"
             };
             var emailResult = mailManager.SendEmail(emailClone);
@@ -268,7 +271,7 @@ namespace MSI_Tester
             emailClone.MessageInformation = new MessageInformation()
             {
                 Body = "TEST BODY",
-                isHTMLBody = false,
+                IsHTMLBody = false,
                 //Subject = "TEST SUBJECT"
             };
             var emailResult = mailManager.SendEmail(emailClone);
@@ -279,7 +282,9 @@ namespace MSI_Tester
             Assert.Fail();
         }
 
-        //Ensures that the the code can handle if both subject and body was not supplied by the client.
+        /// <summary>
+        /// Ensures that the the code can handle if both subject and body was not supplied by the client.
+        /// </summary>
         [Test]
         public void Email_MessageInformation_SubjectAndBody_IsNull()
         {
@@ -287,11 +292,33 @@ namespace MSI_Tester
             emailClone.MessageInformation = new MessageInformation()
             {
                 //Body = "TEST BODY",
-                isHTMLBody = false,
+                IsHTMLBody = false,
                 //Subject = "TEST SUBJECT"
             };
             var emailResult = mailManager.SendEmail(emailClone);
             if (emailResult.ToUpper() == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        /// <summary>
+        /// Ensures that our code can send e-mails with attachments
+        /// </summary>
+        [Test]
+        public void Email_MessageInformation_WithAttachments()
+        {
+            MSI_Runner.Program p = new MSI_Runner.Program();
+            Email emailClone = email;
+            emailClone.MessageInformation = new MessageInformation()
+            {
+                Body = "TEST BODY",
+                Subject = "TEST SUBJECT",
+                Attachments = p.GetTestAttachments(5)
+            };
+            string result = mailManager.SendEmail(emailClone);
+            if(result.ToUpper() == "MESSAGE HAS BEEN SENT.")
             {
                 Assert.Pass();
             }

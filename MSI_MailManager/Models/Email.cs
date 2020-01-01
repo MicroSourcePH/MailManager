@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace MSI_MailManager.Models
 {
     public class Email
@@ -42,7 +44,10 @@ namespace MSI_MailManager.Models
     {
         public string Body { get; set; }
         public string Subject { get; set; }
-        public bool isHTMLBody { get; set; }
+        public bool IsHTMLBody { get; set; }
+        public List<string> Attachments { get; set; }
+        public bool CompressAttachments { get; set; }
+        public string CompressedAttachmentFileName { get; set;  }
     }
 
     /// <summary>

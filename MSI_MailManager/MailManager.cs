@@ -7,6 +7,9 @@ using MSI_MailManager.Models;
 using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
+using System.IO.Compression;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace MSI_MailManager
 {
@@ -54,16 +57,30 @@ namespace MSI_MailManager
                         UseDefaultCredentials = email.SMTPInformation.UseDefaultCredentials,
                         Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
                     };
-                    using (var message = new MailMessage(fromAddress, toAddress)
+                    using var message = new MailMessage(fromAddress, toAddress)
                     {
                         Subject = subject,
-                        Body = body
-                    })
+                        Body = body,
+                        IsBodyHtml = email.MessageInformation.IsHTMLBody,
+                    };
+                    
+                    if(email.MessageInformation.Attachments?.Count > 0)
                     {
-                        smtp.Send(message);
-                        errorCollection.Append("Message has been sent.");
-                        Console.WriteLine("Message has been sent.");
+                        if (email.MessageInformation.CompressAttachments)
+                        {
+                            string zipFilePathAndName = ArchiveAttachments(email.MessageInformation.Attachments, email.MessageInformation.CompressedAttachmentFileName);
+                            message.Attachments.Add(new Attachment(zipFilePathAndName));
+                        }
+                        else
+                        {
+                            foreach (string attachement in email.MessageInformation.Attachments)
+                            {
+                                message.Attachments.Add(new Attachment(attachement));
+                            }
+                        }
                     }
+                    smtp.Send(message);
+                    errorCollection.Append("Message has been sent.");
                 }
                 else
                 {
@@ -126,7 +143,8 @@ namespace MSI_MailManager
                         object propertyValue = property.GetValue(propertyContainer);
                         if (propertyValue == null)
                         {
-                            fieldsWithValidationError.Add(property.Name);
+                            if (property.Name.ToUpper() != "ATTACHMENTS")
+                                fieldsWithValidationError.Add(property.Name);
                         }
                     }
 
@@ -148,6 +166,45 @@ namespace MSI_MailManager
                 result = true;
             }
             return result;
+        }
+
+        /// <summary>
+        /// Creates a zipped copy of the attachment files
+        /// </summary>
+        /// <param name="attachmentPaths">Files to be archived</param>
+        /// <param name="targetZipFileName"></param>
+        /// <returns></returns>
+        private string ArchiveAttachments(List<string> attachmentPaths, string targetZipFileName)
+        {
+            //TODO: Replace files/folder if already existing
+            targetZipFileName = EscapePath(targetZipFileName);
+            string currentAssemblyPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string stagingFolderPath = currentAssemblyPath + targetZipFileName;
+            Directory.CreateDirectory(stagingFolderPath);
+            foreach(string path in attachmentPaths)
+            {
+                string targetFilePathAndName = stagingFolderPath + EscapePath(Path.GetFileName(path));
+                File.Copy(path, targetFilePathAndName);
+            }
+            ZipFile.CreateFromDirectory(stagingFolderPath, currentAssemblyPath + targetZipFileName + ".zip");
+            return currentAssemblyPath + targetZipFileName + ".zip";
+
+        }
+
+        /// <summary>
+        /// This ensures that the path we create is correct for what OS the program is running.
+        /// Windows uses \ to separate directory and all else uses /
+        /// </summary>
+        /// <param name="fileOrFolder">Path or File to escape</param>
+        /// <returns></returns>
+        private string EscapePath(string fileOrFolder)
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "/" + fileOrFolder;
+            }
+            else
+                return @"\" + fileOrFolder;
         }
     }
 }

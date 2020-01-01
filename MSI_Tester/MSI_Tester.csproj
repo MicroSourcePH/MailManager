@@ -14,5 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MSI_MailManager\MSI_MailManager.csproj" />
+    <ProjectReference Include="..\MSI_Runner\MSI_Runner.csproj" />
   </ItemGroup>
 </Project>
