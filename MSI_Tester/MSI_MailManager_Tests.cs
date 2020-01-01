@@ -118,69 +118,6 @@ namespace MSI_Tester
             Assert.Fail();
         }
 
-        #region Email.MessageInformation Tests
-        /// <summary>
-        /// Ensures that the body of the email was supplied by the client.
-        /// </summary>
-        [Test]
-        public void Email_MessageInformation_Body_IsNull()
-        {
-            Email emailClone = email;
-            emailClone.MessageInformation = new MessageInformation()
-            {
-                //Body = "",
-                isHTMLBody = false,
-                Subject = "TEST SUBJECT"
-            };
-            var emailResult = mailManager.SendEmail(emailClone);
-            if(emailResult.ToUpper() ==  "THIS FIELD IS REQUIRED: BODY.")
-            {
-                Assert.Pass();
-            }
-            Assert.Fail();
-        }
-
-        /// <summary>
-        /// Ensures that the subject of the email as supplied by the client
-        /// </summary>
-        [Test]
-        public void Email_MessageInformation_Subject_IsNull()
-        {
-            Email emailClone = email;
-            emailClone.MessageInformation = new MessageInformation()
-            {
-                Body = "TEST BODY",
-                isHTMLBody = false,
-                //Subject = "TEST SUBJECT"
-            };
-            var emailResult = mailManager.SendEmail(emailClone);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: SUBJECT.")
-            {
-                Assert.Pass();
-            }
-            Assert.Fail();
-        }
-
-        //Ensures that the the code can handle if both subject and body was not supplied by the client.
-        [Test]
-        public void Email_MessageInformation_SubjectAndBody_IsNull()
-        {
-            Email emailClone = email;
-            emailClone.MessageInformation = new MessageInformation()
-            {
-                //Body = "TEST BODY",
-                isHTMLBody = false,
-                //Subject = "TEST SUBJECT"
-            };
-            var emailResult = mailManager.SendEmail(emailClone);
-            if (emailResult.ToUpper() == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
-            {
-                Assert.Pass();
-            }
-            Assert.Fail();
-        }
-        #endregion
-
         #region Email.RecipientInformation Tests
         /// <summary>
         /// Ensures that our code can handle when the recipient's e-mail address was not supplied
@@ -292,6 +229,91 @@ namespace MSI_Tester
             };
             var emailResult = mailManager.SendEmail(emailClone);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMPASSWORD.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+        #endregion
+
+        #region Email.MessageInformation Tests
+        /// <summary>
+        /// Ensures that the body of the email was supplied by the client.
+        /// </summary>
+        [Test]
+        public void Email_MessageInformation_Body_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.MessageInformation = new MessageInformation()
+            {
+                //Body = "",
+                isHTMLBody = false,
+                Subject = "TEST SUBJECT"
+            };
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: BODY.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        /// <summary>
+        /// Ensures that the subject of the email as supplied by the client
+        /// </summary>
+        [Test]
+        public void Email_MessageInformation_Subject_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.MessageInformation = new MessageInformation()
+            {
+                Body = "TEST BODY",
+                isHTMLBody = false,
+                //Subject = "TEST SUBJECT"
+            };
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: SUBJECT.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        //Ensures that the the code can handle if both subject and body was not supplied by the client.
+        [Test]
+        public void Email_MessageInformation_SubjectAndBody_IsNull()
+        {
+            Email emailClone = email;
+            emailClone.MessageInformation = new MessageInformation()
+            {
+                //Body = "TEST BODY",
+                isHTMLBody = false,
+                //Subject = "TEST SUBJECT"
+            };
+            var emailResult = mailManager.SendEmail(emailClone);
+            if (emailResult.ToUpper() == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+        #endregion
+
+        #region Email.SMTPInformation Tests
+
+        /// <summary>
+        /// Ensures that our code can handle when the STMP Host URL was not provided by the client
+        /// </summary>
+        [Test]
+        public void Email_SMTPInformation_Host_IsNull()
+        {
+            Email emailClone = email;
+            email.SMTPInformation = new SMTPInformation()
+            {
+                Port = 0
+            };
+            string result = mailManager.SendEmail(emailClone);
+            if (result.ToUpper() == "THIS FIELD IS REQUIRED: HOST.")
             {
                 Assert.Pass();
             }

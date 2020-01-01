@@ -124,13 +124,6 @@ namespace MSI_MailManager
                     foreach (PropertyInfo property in properties)
                     {
                         object propertyValue = property.GetValue(propertyContainer);
-                        if (property.Name.ToUpper() == "PORT")
-                        {
-                            if ((int)propertyValue == 0)
-                            {
-                                fieldsWithValidationError.Add(property.Name);
-                            }
-                        }
                         if (propertyValue == null)
                         {
                             fieldsWithValidationError.Add(property.Name);
