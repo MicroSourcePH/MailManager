@@ -29,7 +29,7 @@ namespace MSI_Tester
                 {
                     FromEmail = "offshoreconfie@gmail.com",
                     FromName = "Hilario Jacla III",
-                    FromPassword = "",
+                    FromPassword = "7tfRPX-=",
                 },
                 SMTPInformation = new SMTPInformation()
                 {

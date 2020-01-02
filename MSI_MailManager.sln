@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI_MailManager", "MSI_Mail
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI_Tester", "MSI_Tester\MSI_Tester.csproj", "{AE57FFBC-A569-49FD-B76F-D42682BEC285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI_Runner", "MSI_Runner\MSI_Runner.csproj", "{1C31E338-33EB-4678-AB9D-D0671C404C46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI_Runner", "MSI_Runner\MSI_Runner.csproj", "{9585CC34-FEBE-46CB-8A04-30036618E644}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +21,9 @@ Global
 		{AE57FFBC-A569-49FD-B76F-D42682BEC285}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE57FFBC-A569-49FD-B76F-D42682BEC285}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE57FFBC-A569-49FD-B76F-D42682BEC285}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C31E338-33EB-4678-AB9D-D0671C404C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C31E338-33EB-4678-AB9D-D0671C404C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C31E338-33EB-4678-AB9D-D0671C404C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C31E338-33EB-4678-AB9D-D0671C404C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9585CC34-FEBE-46CB-8A04-30036618E644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9585CC34-FEBE-46CB-8A04-30036618E644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9585CC34-FEBE-46CB-8A04-30036618E644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9585CC34-FEBE-46CB-8A04-30036618E644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
