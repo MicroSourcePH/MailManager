@@ -3,22 +3,18 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Mail;
-using MSI_MailManager.Models;
 using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.IO;
 using System.Runtime.InteropServices;
+using MSI_MailManager.Models;
 
 namespace MSI_MailManager
 {
     public class MailManager
     {
-        //TODO:
-        //1. Check if e-mail is valid
-        //2. Send e-mail
-
         /// <summary>
         /// Checks if the provided e-mail address follows the correct format
         /// </summary>
@@ -51,7 +47,7 @@ namespace MSI_MailManager
                     SmtpClient smtp = new SmtpClient
                     {
                         Host = email.SMTPInformation.Host,
-                        Port = email.SMTPInformation.Port,
+                        Port = email.SMTPInformation.Port == 0 ? (email.SMTPInformation.EnableSSL ? 587 : 25) : email.SMTPInformation.Port,
                         EnableSsl = email.SMTPInformation.EnableSSL,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = email.SMTPInformation.UseDefaultCredentials,
@@ -64,14 +60,14 @@ namespace MSI_MailManager
                         IsBodyHtml = email.MessageInformation.IsHTMLBody,
                     };
 
-                    foreach(RecipientInformation recipient in email.RecipientInformation)
+                    foreach (RecipientInformation recipient in email.RecipientInformation)
                     {
                         message.To.Add(new MailAddress(recipient.ToEmail));
                     }
 
                     message.From = fromAddress;
-                    
-                    if(email.MessageInformation.Attachments?.Count > 0)
+
+                    if (email.MessageInformation.Attachments?.Count > 0)
                     {
                         if (email.MessageInformation.CompressAttachments)
                         {
@@ -97,7 +93,8 @@ namespace MSI_MailManager
             }
             catch (Exception ex)
             {
-                errorCollection.Append(ex.ToString());
+                errorCollection.Append(ex.Message + " ");
+                errorCollection.Append("Make sure that the SMTP Host and Port is correct.");
             }
             return errorCollection.ToString();
         }
@@ -230,8 +227,7 @@ namespace MSI_MailManager
             {
                 return "/" + fileOrFolder;
             }
-            else
-                return @"\" + fileOrFolder;
+            return @"\" + fileOrFolder;
         }
     }
 }

@@ -6,6 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSI_MailManager" Version="0.5.0" />
+    <ProjectReference Include="..\MSI_MailManager\MSI_MailManager.csproj" />
   </ItemGroup>
 </Project>

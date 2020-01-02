@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using MSI_MailManager.Models;
+using MSI_Runner;
 using NUnit.Framework;
 
 namespace MSI_Tester
@@ -276,7 +278,8 @@ namespace MSI_Tester
         [Test]
         public void Email_MessageInformation_WithAttachments()
         {
-            MSI_Runner.Program p = new MSI_Runner.Program();
+         
+            Program p = new Program();
             Email emailClone = email;
             emailClone.MessageInformation = new MessageInformation()
             {
@@ -299,7 +302,7 @@ namespace MSI_Tester
         [Test]
         public void Email_MessageInformation_WithCompressedAttachments_ZipNameSpecified()
         {
-            MSI_Runner.Program p = new MSI_Runner.Program();
+            Program p = new Program();
             Email emailClone = email;
             emailClone.MessageInformation = new MessageInformation()
             {
@@ -324,7 +327,7 @@ namespace MSI_Tester
         [Test]
         public void Email_MessageInformation_WithCompressedAttachments_ZipNameNotSpecified()
         {
-            MSI_Runner.Program p = new MSI_Runner.Program();
+            Program p = new Program();
             Email emailClone = email;
             emailClone.MessageInformation = new MessageInformation()
             {
@@ -354,7 +357,10 @@ namespace MSI_Tester
             Email emailClone = email;
             email.SMTPInformation = new SMTPInformation()
             {
-                Port = 0
+                EnableSSL = true,
+                //Host = "smtp.gmail.com",
+                //Port = 0,
+                UseDefaultCredentials = true
             };
             string emailResult = mailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
@@ -364,6 +370,29 @@ namespace MSI_Tester
             }
             Assert.Fail();
         }
+
+        [Test]
+        public void Email_SMTPInformtion_Host_IsInvalid()
+        {
+            Email emailClone = email;
+            email.SMTPInformation = new SMTPInformation()
+            {
+                Host = "smtp.invalidhost.com",
+                //Port = 587,
+                EnableSSL = true,
+                UseDefaultCredentials = true
+            };
+            string emailResult = mailManager.SendEmail(emailClone);
+            Console.WriteLine(emailResult);
+            if(emailResult.ToUpper() == "FAILURE SENDING MAIL. MAKE SURE THAT THE SMTP HOST AND PORT IS CORRECT.")
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
+
+        //TODO: Fix an issue where an exception is being thrown for this case: Port is not provided.
+        //TODO: Test when host name is invalid
         #endregion
 
         #endregion

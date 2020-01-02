@@ -15,12 +15,11 @@ namespace MSI_Runner
             List<RecipientInformation> receipients = new List<RecipientInformation>
             {
                 //We put this in a class for now as we might add other properties in future releases.
-                new RecipientInformation() { ToEmail = "hil.jacla@gmail.com" }
+                new RecipientInformation() { ToEmail = "hilario.jaclaiii@confiegroup.com" }
             };
             //Add other recipients
 
-            List<string> attachments = new List<string>();
-            attachments.Add("/users/hiljaclaiii/testAttachment.txt");
+            List<string> attachments = new Program().GetTestAttachments(2);
             //Add other attachments
 
             string result = mailManager.SendEmail(new Email()
@@ -39,13 +38,13 @@ namespace MSI_Runner
                 {
                     FromEmail = "offshoreconfie@gmail.com",
                     FromName = "Hilario Jacla III",
-                    FromPassword = "",
+                    FromPassword = "7tfRPX-=",
                 },
                 SMTPInformation = new SMTPInformation()
                 {
                     EnableSSL = true,
-                    Host = "smtp.gmail.com",
-                    Port = 587,
+                    Host = "smtp.invalidsmtp.com",
+                    //Port = 0,
                     UseDefaultCredentials = true
                 }
             });

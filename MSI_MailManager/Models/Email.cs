@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MSI_MailManager.Models
 {
@@ -115,7 +114,7 @@ namespace MSI_MailManager.Models
         public string Host { get; set; }
 
         /// <summary>
-        /// The port number that will be used to send e-mails. 0 will be used when not specified.
+        /// The port number that will be used to send e-mails. If not specified, we will use 25 EnableSSL is false, otherwise we will use 587.
         /// </summary>
         public int Port { get; set; }
 
