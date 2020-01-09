@@ -36,7 +36,7 @@ namespace MSI_Runner
                 {
                     FromEmail = "offshoreconfie@gmail.com",
                     FromName = "Hilario Jacla III",
-                    FromPassword = "7tfRPX-=",
+                    FromPassword = "",
                 },
                 SMTPInformation = new SMTPInformation()
                 {

@@ -13,7 +13,7 @@ using MSI_MailManager.Models;
 
 namespace MSI_MailManager
 {
-    public class MailManager
+    public static class MailManager
     {
         /// <summary>
         /// Checks if the provided e-mail address follows the correct format
