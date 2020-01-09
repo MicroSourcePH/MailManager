@@ -43,11 +43,11 @@ namespace MSI_Runner
                 SMTPInformation = new SMTPInformation()
                 {
                     EnableSSL = true,
-                    Host = "smtp.invalidsmtp.com",
+                    Host = "smtp.gmail.com",
                     //Port = 0,
                     UseDefaultCredentials = true
                 }
-            });
+            }); 
             Console.WriteLine(result);
         }
 

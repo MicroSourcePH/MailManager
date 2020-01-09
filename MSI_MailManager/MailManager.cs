@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Mail;
@@ -10,6 +9,7 @@ using System.IO.Compression;
 using System.IO;
 using System.Runtime.InteropServices;
 using MSI_MailManager.Models;
+//using System.ComponentModel.DataAnnotations;
 
 namespace MSI_MailManager
 {
@@ -22,7 +22,9 @@ namespace MSI_MailManager
         /// <returns></returns>
         public bool IsEmailValid(string emailAddress)
         {
-            return (new EmailAddressAttribute().IsValid(emailAddress) && new Regex(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").IsMatch(emailAddress));
+            //return (new EmailAddressAttribute().IsValid(emailAddress) && new Regex(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").IsMatch(emailAddress));
+            return new Regex(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").IsMatch(emailAddress);
+
         }
 
 
@@ -53,13 +55,13 @@ namespace MSI_MailManager
                         UseDefaultCredentials = email.SMTPInformation.UseDefaultCredentials,
                         Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
                     };
-                    using var message = new MailMessage()
+
+                    MailMessage message = new MailMessage()
                     {
                         Subject = subject,
                         Body = body,
-                        IsBodyHtml = email.MessageInformation.IsHTMLBody,
+                        IsBodyHtml = email.MessageInformation.IsHTMLBody
                     };
-
                     foreach (RecipientInformation recipient in email.RecipientInformation)
                     {
                         message.To.Add(new MailAddress(recipient.ToEmail));
@@ -218,16 +220,13 @@ namespace MSI_MailManager
         /// <summary>
         /// This ensures that the path we create is correct for what OS the program is running.
         /// Windows uses \ to separate directory and all else uses /
+        /// TODO: [2019-01-09] Windows supports both / and \ for escapting paths, assess if we can remove this method
         /// </summary>
         /// <param name="fileOrFolder">Path or File to escape</param>
         /// <returns></returns>
         private string EscapePath(string fileOrFolder)
         {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return "/" + fileOrFolder;
-            }
-            return @"\" + fileOrFolder;
+            return "/" + fileOrFolder;
         }
     }
 }
