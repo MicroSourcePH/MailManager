@@ -12,31 +12,25 @@ namespace MSI_Runner
     {
         static void Main(string[] args)
         {
-            List<RecipientInformation> receipients = new List<RecipientInformation>
-            {
-                //We put this in a class for now as we might add other properties in future releases.
-                new RecipientInformation() { ToEmail = "hilario.jaclaiii@confiegroup.com" }
-            };
-            //Add other recipients
+            List<string> receipients = new List<string>();
+            receipients.Add("hilario.jaclaiii@confiegroup.com");
             List<string> attachments = new Program().GetTestAttachments(2);
-            //Add other attachments
             string result = MailManager.SendEmail(new Email()
             {
                 MessageInformation = new MessageInformation()
                 {
-                    Body = "TEST BODY",
+                    Body = "<B>TEST BODY IN BOLD</B><I>TEST BODY IN ITALICS</I>",
                     IsHTMLBody = false,
                     Subject = "TEST SUBJECT",
                     Attachments = attachments,
                     CompressAttachments = true,
                     CompressedAttachmentFileName = "TESTARCHIVE"
                 },
-                RecipientInformation = receipients,
+                Recipients = receipients,
                 SenderInformation = new SenderInformation()
                 {
                     FromEmail = "offshoreconfie@gmail.com",
-                    FromName = "Hilario Jacla III",
-                    FromPassword = "",
+                    FromPassword = "7tfRPX-=",
                 },
                 SMTPInformation = new SMTPInformation()
                 {

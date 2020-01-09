@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;net45</TargetFrameworks>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.7</PackageVersion>
+    <PackageVersion>0.7.1</PackageVersion>
     <Authors>Microsource </Authors>
     <Description>Mail manager that handles sending of e-mails from your application to multiple SMTP clients.</Description>
     <PackageId>MSI_MailManager</PackageId>
     <Copyright>Microsource</Copyright>
     <Owners>Microsource</Owners>
-    <PackageReleaseNotes>The package now supports .Net Core 3.0 and .Net Framework 4.5</PackageReleaseNotes>
+    <PackageReleaseNotes>Made the MailManager and its methods static so that the client will not have to create objects of MailManager in order to use its methods.</PackageReleaseNotes>
     <Summary>MSI_MailManager</Summary>
     <PackageTags>MSI_MailManager</PackageTags>
     <Title>MSI_MailManager</Title>

@@ -17,6 +17,8 @@ namespace MSI_Tester
         [SetUp]
         public void Setup()
         {
+            List<string> receipients = new List<string>();
+            receipients.Add("hilario.jaclaiii@confiegroup.com");
             email = new Email()
             {
                 MessageInformation = new MessageInformation()
@@ -25,12 +27,11 @@ namespace MSI_Tester
                     IsHTMLBody = false,
                     Subject = "TEST SUBJECT"
                 },
-                RecipientInformation = new List<RecipientInformation> { new RecipientInformation() { ToEmail = "hil.jacla@gmail.com"} },
+                Recipients = receipients,
                 SenderInformation = new SenderInformation()
                 {
                     FromEmail = "offshoreconfie@gmail.com",
-                    FromName = "Hilario Jacla III",
-                    FromPassword = "",
+                    FromPassword = "7tfRPX-=",
                 },
                 SMTPInformation = new SMTPInformation()
                 {
@@ -128,7 +129,7 @@ namespace MSI_Tester
         public void Email_RecipientInformation_ToNameAndToEmail_IsNull()
         {
             Email emailClone = email;
-            emailClone.RecipientInformation = new List<RecipientInformation>();
+            emailClone.Recipients = new List<string>();
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "PLEASE SPECIFY AT LEAST 1 RECIPIENT.")
@@ -149,33 +150,11 @@ namespace MSI_Tester
             Email emailClone = email;
             emailClone.SenderInformation = new SenderInformation()
             {
-                FromName = "Hilario Jacla III",
                 FromPassword = "Password1"
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMEMAIL.")
-            {
-                Assert.Pass();
-            }
-            Assert.Fail();
-        }
-
-        /// <summary>
-        /// Ensures that our code can handle whent the sender's name was not supplied
-        /// </summary>
-        [Test]
-        public void Email_SenderInformation_FromName_IsNull()
-        {
-            Email emailClone = email;
-            emailClone.SenderInformation = new SenderInformation()
-            {
-                FromEmail = "offshoreconfie@gmail.com",
-                FromPassword = "Password1"
-            };
-            var emailResult = MailManager.SendEmail(emailClone);
-            Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMNAME.")
             {
                 Assert.Pass();
             }
@@ -191,8 +170,7 @@ namespace MSI_Tester
             Email emailClone = email;
             emailClone.SenderInformation = new SenderInformation()
             {
-                FromEmail = "offshoreconfie@gmail.com",
-                FromName = "Hilario Jacla III"
+                FromEmail = "offshoreconfie@gmail.com"
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);

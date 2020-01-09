@@ -40,7 +40,7 @@ namespace MSI_MailManager
             {
                 if (AllRequiredFieldsSuppliedByTheUser(email, out errorCollection))
                 {
-                    var fromAddress = new MailAddress(email.SenderInformation.FromEmail, email.SenderInformation.FromName);
+                    var fromAddress = new MailAddress(email.SenderInformation.FromEmail);
                     //var toAddress = new MailAddress(email.RecipientInformation.ToEmail, email.RecipientInformation.ToName);
                     string fromPassword = email.SenderInformation.FromPassword;
                     string subject = email.MessageInformation.Subject;
@@ -62,9 +62,9 @@ namespace MSI_MailManager
                         Body = body,
                         IsBodyHtml = email.MessageInformation.IsHTMLBody
                     };
-                    foreach (RecipientInformation recipient in email.RecipientInformation)
+                    foreach (string recipient in email.Recipients)
                     {
-                        message.To.Add(new MailAddress(recipient.ToEmail));
+                        message.To.Add(new MailAddress(recipient));
                     }
 
                     message.From = fromAddress;
@@ -130,8 +130,8 @@ namespace MSI_MailManager
                             propertyContainer = email.MessageInformation;
                             break;
                         case 1:
-                            propertyInformation = email.RecipientInformation.GetType();
-                            propertyContainer = email.RecipientInformation;
+                            propertyInformation = email.Recipients.GetType();
+                            propertyContainer = email.Recipients;
                             break;
                         case 2:
                             propertyInformation = email.SenderInformation.GetType();
@@ -143,10 +143,10 @@ namespace MSI_MailManager
                             break;
                     }
 
-                    if (propertyContainer == email.RecipientInformation)
+                    if (propertyContainer == email.Recipients)
                     {
                         //Ensures that we have at least 1 recipient
-                        if (email.RecipientInformation.Count < 1)
+                        if (email.Recipients.Count < 1)
                             errorCollection.Append("Please specify at least 1 recipient.");
                     }
                     else

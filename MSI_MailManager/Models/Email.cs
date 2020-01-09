@@ -7,7 +7,7 @@ namespace MSI_MailManager.Models
         public Email()
         {
             //This will prevent the properties from being NULL
-            RecipientInformation = new List<RecipientInformation>();
+            Recipients = new List<string>();
             SenderInformation = new SenderInformation();
             MessageInformation = new MessageInformation();
             SMTPInformation = new SMTPInformation();
@@ -15,7 +15,7 @@ namespace MSI_MailManager.Models
         /// <summary>
         /// Container for recipient related information.
         /// </summary>
-        public List<RecipientInformation> RecipientInformation { get; set; }
+        public List<string> Recipients { get; set; }
 
         /// <summary>
         /// Container for sender related information.
@@ -34,17 +34,6 @@ namespace MSI_MailManager.Models
     }
 
     /// <summary>
-    /// This will hold information where the e-mail will be sent to.
-    /// </summary>
-    public class RecipientInformation
-    {
-        /// <summary>
-        /// The e-mail address of the recipient.
-        /// </summary>
-        public string ToEmail { get; set; }
-    }
-
-    /// <summary>
     /// This will be used to hold the sender's information.
     /// </summary>
     public class SenderInformation
@@ -53,11 +42,6 @@ namespace MSI_MailManager.Models
         /// The e-mail address of the sender.
         /// </summary>
         public string FromEmail { get; set; }
-
-        /// <summary>
-        /// The name of the sender.
-        /// </summary>
-        public string FromName { get; set; }
 
         /// <summary>
         /// The password of the sender.
