@@ -20,7 +20,7 @@ namespace MSI_MailManager
         /// </summary>
         /// <param name="emailAddress">E-mail address string to check</param>
         /// <returns></returns>
-        public bool IsEmailValid(string emailAddress)
+        public static bool IsEmailValid(string emailAddress)
         {
             //return (new EmailAddressAttribute().IsValid(emailAddress) && new Regex(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").IsMatch(emailAddress));
             return new Regex(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").IsMatch(emailAddress);
@@ -33,7 +33,7 @@ namespace MSI_MailManager
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public string SendEmail(Email email)
+        public static string SendEmail(Email email)
         {
             StringBuilder errorCollection = new StringBuilder();
             try
@@ -108,7 +108,7 @@ namespace MSI_MailManager
         /// <param name="email"></param>
         /// <param name="errorCollection">List of validation errors found during the nullity check.</param>
         /// <returns></returns>
-        private bool AllRequiredFieldsSuppliedByTheUser(Email email, out StringBuilder errorCollection)
+        private static bool AllRequiredFieldsSuppliedByTheUser(Email email, out StringBuilder errorCollection)
         {
             List<string> fieldsWithValidationError = new List<string>();
             errorCollection = new StringBuilder();
@@ -191,7 +191,7 @@ namespace MSI_MailManager
         /// <param name="attachmentPaths">Files to be archived</param>
         /// <param name="targetZipFileName"></param>
         /// <returns></returns>
-        private string ArchiveAttachments(List<string> attachmentPaths, string targetZipFileName)
+        private static string ArchiveAttachments(List<string> attachmentPaths, string targetZipFileName)
         {
             targetZipFileName = EscapePath(targetZipFileName);
             string currentAssemblyPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -224,7 +224,7 @@ namespace MSI_MailManager
         /// </summary>
         /// <param name="fileOrFolder">Path or File to escape</param>
         /// <returns></returns>
-        private string EscapePath(string fileOrFolder)
+        private static string EscapePath(string fileOrFolder)
         {
             return "/" + fileOrFolder;
         }
