@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using MSI_MailManager;
 using MSI_MailManager.Models;
 using MSI_Runner;
 using NUnit.Framework;
@@ -10,14 +11,12 @@ namespace MSI_Tester
    
     public class Tests
     {
-        MSI_MailManager.MailManager mailManager;
         Email email;
 
         #region Test Data Initialization
         [SetUp]
         public void Setup()
         {
-            mailManager = new MSI_MailManager.MailManager();
             email = new Email()
             {
                 MessageInformation = new MessageInformation()
@@ -52,7 +51,7 @@ namespace MSI_Tester
         public void Email_IsValid()
         {
             string emailAddress = "hil.jacla@gmail.com";
-            if (mailManager.IsEmailValid(emailAddress))
+            if (MailManager.IsEmailValid(emailAddress))
             {
                 Assert.Pass();
             }
@@ -67,7 +66,7 @@ namespace MSI_Tester
         public void Email_IsInvalid_If_WithoutATSymbol()
         {
             string emailAddress = "hiljaclagmail.com";
-            if(mailManager.IsEmailValid(emailAddress))
+            if(MailManager.IsEmailValid(emailAddress))
             {
                 Assert.Fail();
             }
@@ -81,7 +80,7 @@ namespace MSI_Tester
         public void Email_IsInvalid_If_WithoutDomain()
         {
             string emailAddress = "hil.jacla@gmail";
-            if(mailManager.IsEmailValid(emailAddress))
+            if(MailManager.IsEmailValid(emailAddress))
             {
                 Assert.Fail();
             }
@@ -95,7 +94,7 @@ namespace MSI_Tester
         public void Email_IsInvalid_Empty()
         {
             string emailAddress = "";
-            if(mailManager.IsEmailValid(emailAddress))
+            if(MailManager.IsEmailValid(emailAddress))
             {
                 Assert.Fail();
             }
@@ -111,7 +110,7 @@ namespace MSI_Tester
         public void Email_MessageInformation_DataIsComplete()
         {
             Email emailClone = email;
-            var emailResult = mailManager.SendEmail(emailClone);
+            var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
             {
@@ -130,7 +129,7 @@ namespace MSI_Tester
         {
             Email emailClone = email;
             emailClone.RecipientInformation = new List<RecipientInformation>();
-            var emailResult = mailManager.SendEmail(emailClone);
+            var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "PLEASE SPECIFY AT LEAST 1 RECIPIENT.")
             {
@@ -153,7 +152,7 @@ namespace MSI_Tester
                 FromName = "Hilario Jacla III",
                 FromPassword = "Password1"
             };
-            var emailResult = mailManager.SendEmail(emailClone);
+            var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMEMAIL.")
             {
@@ -174,7 +173,7 @@ namespace MSI_Tester
                 FromEmail = "offshoreconfie@gmail.com",
                 FromPassword = "Password1"
             };
-            var emailResult = mailManager.SendEmail(emailClone);
+            var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMNAME.")
             {
@@ -195,7 +194,7 @@ namespace MSI_Tester
                 FromEmail = "offshoreconfie@gmail.com",
                 FromName = "Hilario Jacla III"
             };
-            var emailResult = mailManager.SendEmail(emailClone);
+            var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMPASSWORD.")
             {
@@ -219,7 +218,7 @@ namespace MSI_Tester
                 IsHTMLBody = false,
                 Subject = "TEST SUBJECT"
             };
-            var emailResult = mailManager.SendEmail(emailClone);
+            var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: BODY.")
             {
@@ -241,7 +240,7 @@ namespace MSI_Tester
                 IsHTMLBody = false,
                 //Subject = "TEST SUBJECT"
             };
-            var emailResult = mailManager.SendEmail(emailClone);
+            var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: SUBJECT.")
             {
@@ -263,7 +262,7 @@ namespace MSI_Tester
                 IsHTMLBody = false,
                 //Subject = "TEST SUBJECT"
             };
-            var emailResult = mailManager.SendEmail(emailClone);
+            var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
             {
@@ -287,7 +286,7 @@ namespace MSI_Tester
                 Subject = "TEST SUBJECT",
                 Attachments = p.GetTestAttachments(5)
             };
-            string emailResult = mailManager.SendEmail(emailClone);
+            string emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
             {
@@ -312,7 +311,7 @@ namespace MSI_Tester
                 CompressAttachments=true,
                 CompressedAttachmentFileName= "TESTCOMPRESSEDATTACHMENT"
             };
-            string emailResult = mailManager.SendEmail(emailClone);
+            string emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
             {
@@ -336,7 +335,7 @@ namespace MSI_Tester
                 Attachments = p.GetTestAttachments(5),
                 CompressAttachments = true
             };
-            string emailResult = mailManager.SendEmail(emailClone);
+            string emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
             {
@@ -362,7 +361,7 @@ namespace MSI_Tester
                 //Port = 0,
                 UseDefaultCredentials = true
             };
-            string emailResult = mailManager.SendEmail(emailClone);
+            string emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: HOST.")
             {
@@ -382,7 +381,7 @@ namespace MSI_Tester
                 EnableSSL = true,
                 UseDefaultCredentials = true
             };
-            string emailResult = mailManager.SendEmail(emailClone);
+            string emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
             if(emailResult.ToUpper() == "FAILURE SENDING MAIL. MAKE SURE THAT THE SMTP HOST AND PORT IS CORRECT.")
             {

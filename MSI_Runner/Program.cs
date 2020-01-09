@@ -5,24 +5,22 @@ using System.Reflection;
 using MSI_MailManager;
 using MSI_MailManager.Models;
 
+
 namespace MSI_Runner
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            MailManager mailManager = new MailManager();
             List<RecipientInformation> receipients = new List<RecipientInformation>
             {
                 //We put this in a class for now as we might add other properties in future releases.
                 new RecipientInformation() { ToEmail = "hilario.jaclaiii@confiegroup.com" }
             };
             //Add other recipients
-
             List<string> attachments = new Program().GetTestAttachments(2);
             //Add other attachments
-
-            string result = mailManager.SendEmail(new Email()
+            string result = MailManager.SendEmail(new Email()
             {
                 MessageInformation = new MessageInformation()
                 {
