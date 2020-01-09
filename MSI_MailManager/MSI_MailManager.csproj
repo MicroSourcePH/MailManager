@@ -9,8 +9,7 @@
     <PackageId>MSI_MailManager</PackageId>
     <Copyright>Microsource</Copyright>
     <Owners>Microsource</Owners>
-    <PackageReleaseNotes>Fixed an exception that is being thrown when port number was not provided.
-NOTE: This version currently only supports applications written in .Net Core 3.0, we are currently working on converting this to .Net Standard that will allow support for .Net Framework imports.</PackageReleaseNotes>
+    <PackageReleaseNotes>The package now supports .Net Core 3.0 and .Net Framework 4.5</PackageReleaseNotes>
     <Summary>MSI_MailManager</Summary>
     <PackageTags>MSI_MailManager</PackageTags>
     <Title>MSI_MailManager</Title>
