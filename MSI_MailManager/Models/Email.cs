@@ -152,7 +152,7 @@ namespace MSI_MailManager.Models
         /// <summary>
         /// There are required fields that does not have values
         /// </summary>
-        MissinValuesForRequiredFields = 400,
+        MissingValuesForRequiredFields = 400,
 
         /// <summary>
         /// Placeholder for other uncategorized error encountered during the SendEmail() operation

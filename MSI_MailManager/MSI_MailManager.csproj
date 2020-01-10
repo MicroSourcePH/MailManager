@@ -10,8 +10,9 @@
     <Copyright>Microsource</Copyright>
     <Owners>Microsource</Owners>
     <PackageReleaseNotes>SendEmail() of MailManager now returns EmailResult that has two parameters:
-1. EmailResultCode - An integer representation of the operation result
-2. ResultMessage</PackageReleaseNotes>
+1. ResultCode - An integer representation of the operation result
+2. ResultMessage - Represents any message collected as a result of the SendEmail call
+</PackageReleaseNotes>
     <Summary>MSI_MailManager</Summary>
     <PackageTags>MSI_MailManager</PackageTags>
     <Title>MSI_MailManager</Title>

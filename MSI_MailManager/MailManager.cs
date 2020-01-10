@@ -106,7 +106,7 @@ namespace MSI_MailManager
                 case string a when a.Contains("SENT"):
                     return new EmailResult() { ResultCode = ResultCode.Success, ResultMessage = errorCollection };
                 case string a when a.Contains("REQUIRED"):
-                    return new EmailResult() { ResultCode = ResultCode.MissinValuesForRequiredFields, ResultMessage = errorCollection };
+                    return new EmailResult() { ResultCode = ResultCode.MissingValuesForRequiredFields, ResultMessage = errorCollection };
                 case string a when a.Contains("EXCEPTION"):
                     return new EmailResult() { ResultCode = ResultCode.FailedWithException, ResultMessage = errorCollection };
                 case string a when a.Contains("RECIPIENT"):
