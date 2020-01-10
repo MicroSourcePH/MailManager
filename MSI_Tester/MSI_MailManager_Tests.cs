@@ -113,7 +113,7 @@ namespace MSI_Tester
             Email emailClone = email;
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
+            if (emailResult.ResultCode == EmailResultCode.Success)
             {
                 Console.WriteLine(emailResult);
                 Assert.Pass();
@@ -132,7 +132,7 @@ namespace MSI_Tester
             emailClone.Recipients = new List<string>();
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "PLEASE SPECIFY AT LEAST 1 RECIPIENT.")
+            if (emailResult.ResultCode== EmailResultCode.NoRecipientProvided)
             {
                 Assert.Pass();
             }
@@ -154,7 +154,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMEMAIL.")
+            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage ==  "THIS FIELD IS REQUIRED: FROMEMAIL.")
             {
                 Assert.Pass();
             }
@@ -174,7 +174,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: FROMPASSWORD.")
+            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: FROMPASSWORD.")
             {
                 Assert.Pass();
             }
@@ -198,7 +198,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: BODY.")
+            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage ==  "THIS FIELD IS REQUIRED: BODY.")
             {
                 Assert.Pass();
             }
@@ -220,7 +220,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: SUBJECT.")
+            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: SUBJECT.")
             {
                 Assert.Pass();
             }
@@ -242,7 +242,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
+            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
             {
                 Assert.Pass();
             }
@@ -264,9 +264,9 @@ namespace MSI_Tester
                 Subject = "TEST SUBJECT",
                 Attachments = p.GetTestAttachments(5)
             };
-            string emailResult = MailManager.SendEmail(emailClone);
+            EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
+            if (emailResult.ResultCode == EmailResultCode.Success)
             {
                 Assert.Pass();
             }
@@ -289,9 +289,9 @@ namespace MSI_Tester
                 CompressAttachments=true,
                 CompressedAttachmentFileName= "TESTCOMPRESSEDATTACHMENT"
             };
-            string emailResult = MailManager.SendEmail(emailClone);
+            EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
+            if (emailResult.ResultCode == EmailResultCode.Success)
             {
                 Assert.Pass();
             }
@@ -313,9 +313,9 @@ namespace MSI_Tester
                 Attachments = p.GetTestAttachments(5),
                 CompressAttachments = true
             };
-            string emailResult = MailManager.SendEmail(emailClone);
+            EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "MESSAGE HAS BEEN SENT.")
+            if (emailResult.ResultCode == EmailResultCode.Success)
             {
                 Assert.Pass();
             }
@@ -339,9 +339,9 @@ namespace MSI_Tester
                 //Port = 0,
                 UseDefaultCredentials = true
             };
-            string emailResult = MailManager.SendEmail(emailClone);
+            EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ToUpper() == "THIS FIELD IS REQUIRED: HOST.")
+            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: HOST.")
             {
                 Assert.Pass();
             }
@@ -359,17 +359,14 @@ namespace MSI_Tester
                 EnableSSL = true,
                 UseDefaultCredentials = true
             };
-            string emailResult = MailManager.SendEmail(emailClone);
+            EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if(emailResult.ToUpper() == "FAILURE SENDING MAIL. MAKE SURE THAT THE SMTP HOST AND PORT IS CORRECT.")
+            if(emailResult.ResultCode == EmailResultCode.UnknownError && emailResult.ResultMessage.ToUpper() == "FAILURE SENDING MAIL. MAKE SURE THAT THE SMTP HOST AND PORT IS CORRECT.")
             {
                 Assert.Pass();
             }
             Assert.Fail();
         }
-
-        //TODO: Fix an issue where an exception is being thrown for this case: Port is not provided.
-        //TODO: Test when host name is invalid
         #endregion
 
         #endregion

@@ -26,4 +26,7 @@
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\ResultCode.cs" />
+  </ItemGroup>
 </Project>

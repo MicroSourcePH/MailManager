@@ -7,9 +7,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.IO;
-using System.Runtime.InteropServices;
 using MSI_MailManager.Models;
-//using System.ComponentModel.DataAnnotations;
 
 namespace MSI_MailManager
 {
@@ -33,7 +31,7 @@ namespace MSI_MailManager
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static string SendEmail(Email email)
+        public static EmailResult SendEmail(Email email)
         {
             StringBuilder errorCollection = new StringBuilder();
             try
@@ -98,7 +96,24 @@ namespace MSI_MailManager
                 errorCollection.Append(ex.Message + " ");
                 errorCollection.Append("Make sure that the SMTP Host and Port is correct.");
             }
-            return errorCollection.ToString();
+            return GenerateEmailResult(errorCollection.ToString().ToUpper());
+        }
+
+        private static EmailResult GenerateEmailResult(string errorCollection)
+        {
+            switch(errorCollection)
+            {
+                case string a when a.Contains("SENT"):
+                    return new EmailResult() { ResultCode = EmailResultCode.Success, ResultMessage = errorCollection };
+                case string a when a.Contains("REQUIRED"):
+                    return new EmailResult() { ResultCode = EmailResultCode.MissinValuesForRequiredFields, ResultMessage = errorCollection };
+                case string a when a.Contains("EXCEPTION"):
+                    return new EmailResult() { ResultCode = EmailResultCode.FailedWithException, ResultMessage = errorCollection };
+                case string a when a.Contains("RECIPIENT"):
+                    return new EmailResult() { ResultCode = EmailResultCode.NoRecipientProvided, ResultMessage = errorCollection };
+                default:
+                    return new EmailResult() { ResultCode = EmailResultCode.UnknownError, ResultMessage = errorCollection };
+            }
         }
 
         /// <summary>

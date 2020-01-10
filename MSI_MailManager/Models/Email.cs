@@ -111,6 +111,30 @@ namespace MSI_MailManager.Models
         /// Flags if we are going to use the default network credential
         /// </summary>
         public bool UseDefaultCredentials { get; set; }
+    }
 
+    /// <summary>
+    /// Will contain the result of the SendEmail method
+    /// </summary>
+    public class EmailResult
+    {
+        /// <summary>
+        /// Will contain the result code of the SendEmail operation
+        /// </summary>
+        public EmailResultCode ResultCode { get; set; }
+
+        /// <summary>
+        /// Will return the result message of the SendEmail operation
+        /// </summary>
+        public string ResultMessage { get; set; }
+    }
+
+    public enum EmailResultCode
+    {
+        Success = 100,
+        FailedWithException = 200,
+        NoRecipientProvided = 300,
+        MissinValuesForRequiredFields = 400,
+        UnknownError = 500
     }
 }

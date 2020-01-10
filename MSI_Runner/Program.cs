@@ -15,32 +15,37 @@ namespace MSI_Runner
             List<string> receipients = new List<string>();
             receipients.Add("hilario.jaclaiii@confiegroup.com");
             List<string> attachments = new Program().GetTestAttachments(2);
-            string result = MailManager.SendEmail(new Email()
+            EmailResult result = MailManager.SendEmail(new Email()
             {
                 MessageInformation = new MessageInformation()
                 {
-                    Body = "<B>TEST BODY IN BOLD</B><I>TEST BODY IN ITALICS</I>",
+                    Body = "Message body goes here",
+                    Subject = "Message subject goes here",
+
+                    //We can leave these properties unassigned
                     IsHTMLBody = false,
-                    Subject = "TEST SUBJECT",
                     Attachments = attachments,
                     CompressAttachments = true,
-                    CompressedAttachmentFileName = "TESTARCHIVE"
+                    CompressedAttachmentFileName = "Archive File Name"
                 },
                 Recipients = receipients,
                 SenderInformation = new SenderInformation()
                 {
                     FromEmail = "offshoreconfie@gmail.com",
+
+                    //We can leave this blank
                     FromPassword = "7tfRPX-=",
                 },
                 SMTPInformation = new SMTPInformation()
                 {
                     EnableSSL = true,
                     Host = "smtp.gmail.com",
-                    //Port = 0,
+
+                    //We can leave these properties unassigned
                     UseDefaultCredentials = true
                 }
             }); 
-            Console.WriteLine(result);
+            Console.WriteLine(result.ResultMessage);
         }
 
         /// <summary>
