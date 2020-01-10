@@ -113,7 +113,7 @@ namespace MSI_Tester
             Email emailClone = email;
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.Success)
+            if (emailResult.ResultCode == ResultCode.Success)
             {
                 Console.WriteLine(emailResult);
                 Assert.Pass();
@@ -132,7 +132,7 @@ namespace MSI_Tester
             emailClone.Recipients = new List<string>();
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode== EmailResultCode.NoRecipientProvided)
+            if (emailResult.ResultCode== ResultCode.NoRecipientProvided)
             {
                 Assert.Pass();
             }
@@ -154,7 +154,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage ==  "THIS FIELD IS REQUIRED: FROMEMAIL.")
+            if (emailResult.ResultCode == ResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage ==  "THIS FIELD IS REQUIRED: FROMEMAIL.")
             {
                 Assert.Pass();
             }
@@ -174,7 +174,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: FROMPASSWORD.")
+            if (emailResult.ResultCode == ResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: FROMPASSWORD.")
             {
                 Assert.Pass();
             }
@@ -198,7 +198,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage ==  "THIS FIELD IS REQUIRED: BODY.")
+            if (emailResult.ResultCode == ResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage ==  "THIS FIELD IS REQUIRED: BODY.")
             {
                 Assert.Pass();
             }
@@ -220,7 +220,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: SUBJECT.")
+            if (emailResult.ResultCode == ResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: SUBJECT.")
             {
                 Assert.Pass();
             }
@@ -242,7 +242,7 @@ namespace MSI_Tester
             };
             var emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
+            if (emailResult.ResultCode == ResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THE FOLLOWING FIELDS ARE REQUIRED: BODY,SUBJECT.")
             {
                 Assert.Pass();
             }
@@ -266,7 +266,7 @@ namespace MSI_Tester
             };
             EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.Success)
+            if (emailResult.ResultCode == ResultCode.Success)
             {
                 Assert.Pass();
             }
@@ -291,7 +291,7 @@ namespace MSI_Tester
             };
             EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.Success)
+            if (emailResult.ResultCode == ResultCode.Success)
             {
                 Assert.Pass();
             }
@@ -315,7 +315,7 @@ namespace MSI_Tester
             };
             EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.Success)
+            if (emailResult.ResultCode == ResultCode.Success)
             {
                 Assert.Pass();
             }
@@ -341,7 +341,7 @@ namespace MSI_Tester
             };
             EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if (emailResult.ResultCode == EmailResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: HOST.")
+            if (emailResult.ResultCode == ResultCode.MissinValuesForRequiredFields && emailResult.ResultMessage == "THIS FIELD IS REQUIRED: HOST.")
             {
                 Assert.Pass();
             }
@@ -361,7 +361,7 @@ namespace MSI_Tester
             };
             EmailResult emailResult = MailManager.SendEmail(emailClone);
             Console.WriteLine(emailResult);
-            if(emailResult.ResultCode == EmailResultCode.UnknownError && emailResult.ResultMessage.ToUpper() == "FAILURE SENDING MAIL. MAKE SURE THAT THE SMTP HOST AND PORT IS CORRECT.")
+            if(emailResult.ResultCode == ResultCode.UnknownError && emailResult.ResultMessage.ToUpper() == "FAILURE SENDING MAIL. MAKE SURE THAT THE SMTP HOST AND PORT IS CORRECT.")
             {
                 Assert.Pass();
             }

@@ -104,15 +104,15 @@ namespace MSI_MailManager
             switch(errorCollection)
             {
                 case string a when a.Contains("SENT"):
-                    return new EmailResult() { ResultCode = EmailResultCode.Success, ResultMessage = errorCollection };
+                    return new EmailResult() { ResultCode = ResultCode.Success, ResultMessage = errorCollection };
                 case string a when a.Contains("REQUIRED"):
-                    return new EmailResult() { ResultCode = EmailResultCode.MissinValuesForRequiredFields, ResultMessage = errorCollection };
+                    return new EmailResult() { ResultCode = ResultCode.MissinValuesForRequiredFields, ResultMessage = errorCollection };
                 case string a when a.Contains("EXCEPTION"):
-                    return new EmailResult() { ResultCode = EmailResultCode.FailedWithException, ResultMessage = errorCollection };
+                    return new EmailResult() { ResultCode = ResultCode.FailedWithException, ResultMessage = errorCollection };
                 case string a when a.Contains("RECIPIENT"):
-                    return new EmailResult() { ResultCode = EmailResultCode.NoRecipientProvided, ResultMessage = errorCollection };
+                    return new EmailResult() { ResultCode = ResultCode.NoRecipientProvided, ResultMessage = errorCollection };
                 default:
-                    return new EmailResult() { ResultCode = EmailResultCode.UnknownError, ResultMessage = errorCollection };
+                    return new EmailResult() { ResultCode = ResultCode.UnknownError, ResultMessage = errorCollection };
             }
         }
 

@@ -121,7 +121,7 @@ namespace MSI_MailManager.Models
         /// <summary>
         /// Will contain the result code of the SendEmail operation
         /// </summary>
-        public EmailResultCode ResultCode { get; set; }
+        public ResultCode ResultCode { get; set; }
 
         /// <summary>
         /// Will return the result message of the SendEmail operation
@@ -129,12 +129,34 @@ namespace MSI_MailManager.Models
         public string ResultMessage { get; set; }
     }
 
-    public enum EmailResultCode
+    /// <summary>
+    /// Integer representation of the SendEmail operation's result
+    /// </summary>
+    public enum ResultCode
     {
+        /// <summary>
+        /// No errors were encountered, email was sent successfully
+        /// </summary>
         Success = 100,
+
+        /// <summary>
+        /// Operation failed due to an exception
+        /// </summary>
         FailedWithException = 200,
+
+        /// <summary>
+        /// No recipient was provided by the client
+        /// </summary>
         NoRecipientProvided = 300,
+
+        /// <summary>
+        /// There are required fields that does not have values
+        /// </summary>
         MissinValuesForRequiredFields = 400,
+
+        /// <summary>
+        /// Placeholder for other uncategorized error encountered during the SendEmail() operation
+        /// </summary>
         UnknownError = 500
     }
 }

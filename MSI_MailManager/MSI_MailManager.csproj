@@ -3,13 +3,15 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;net45</TargetFrameworks>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.7.1</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>Microsource </Authors>
     <Description>Mail manager that handles sending of e-mails from your application to multiple SMTP clients.</Description>
     <PackageId>MSI_MailManager</PackageId>
     <Copyright>Microsource</Copyright>
     <Owners>Microsource</Owners>
-    <PackageReleaseNotes>Made the MailManager and its methods static so that the client will not have to create objects of MailManager in order to use its methods.</PackageReleaseNotes>
+    <PackageReleaseNotes>SendEmail() of MailManager now returns EmailResult that has two parameters:
+1. EmailResultCode - An integer representation of the operation result
+2. ResultMessage</PackageReleaseNotes>
     <Summary>MSI_MailManager</Summary>
     <PackageTags>MSI_MailManager</PackageTags>
     <Title>MSI_MailManager</Title>
