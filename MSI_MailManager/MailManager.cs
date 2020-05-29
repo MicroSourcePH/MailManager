@@ -103,7 +103,7 @@ namespace MSI_MailManager
         {
             switch(errorCollection)
             {
-                case string a when a.Contains("SENT"):
+                case string a when a.Contains("MESSAGE HAS BEEN SENT"):
                     return new EmailResult() { ResultCode = ResultCode.Success, ResultMessage = errorCollection };
                 case string a when a.Contains("REQUIRED"):
                     return new EmailResult() { ResultCode = ResultCode.MissingValuesForRequiredFields, ResultMessage = errorCollection };

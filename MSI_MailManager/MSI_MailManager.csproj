@@ -3,16 +3,13 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;net45</TargetFrameworks>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Microsource </Authors>
     <Description>Mail manager that handles sending of e-mails from your application to multiple SMTP clients.</Description>
     <PackageId>MSI_MailManager</PackageId>
     <Copyright>Microsource</Copyright>
     <Owners>Microsource</Owners>
-    <PackageReleaseNotes>SendEmail() of MailManager now returns EmailResult that has two parameters:
-1. ResultCode - An integer representation of the operation result
-2. ResultMessage - Represents any message collected as a result of the SendEmail call
-</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed a bug where when we get an SMTP response  "Message has not been sent", the package considers the operation as Successful</PackageReleaseNotes>
     <Summary>MSI_MailManager</Summary>
     <PackageTags>MSI_MailManager</PackageTags>
     <Title>MSI_MailManager</Title>
