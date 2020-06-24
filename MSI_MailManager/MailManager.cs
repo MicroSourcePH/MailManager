@@ -47,13 +47,15 @@ namespace MSI_MailManager
                     SmtpClient smtp = new SmtpClient
                     {
                         Host = email.SMTPInformation.Host,
-                        Port = email.SMTPInformation.Port == 0 ? (email.SMTPInformation.EnableSSL ? 587 : 25) : email.SMTPInformation.Port,
                         EnableSsl = email.SMTPInformation.EnableSSL,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = email.SMTPInformation.UseDefaultCredentials,
                         Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
                     };
 
+                    if (email.SMTPInformation.Port > 0)
+                        smtp.Port = email.SMTPInformation.Port;
+                    
                     MailMessage message = new MailMessage()
                     {
                         Subject = subject,

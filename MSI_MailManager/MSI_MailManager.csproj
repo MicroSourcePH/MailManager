@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;net45</TargetFrameworks>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>1.0.1</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
     <Authors>Microsource </Authors>
     <Description>Mail manager that handles sending of e-mails from your application to multiple SMTP clients.</Description>
     <PackageId>MSI_MailManager</PackageId>
     <Copyright>Microsource</Copyright>
     <Owners>Microsource</Owners>
-    <PackageReleaseNotes>Fixed a bug where when we get an SMTP response  "Message has not been sent", the package considers the operation as Successful</PackageReleaseNotes>
+    <PackageReleaseNotes>We are no longer using a default port number when it is not provided by the client</PackageReleaseNotes>
     <Summary>MSI_MailManager</Summary>
     <PackageTags>MSI_MailManager</PackageTags>
     <Title>MSI_MailManager</Title>
